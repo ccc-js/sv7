@@ -15,10 +15,12 @@ export class Server {
           })
         })
     }
+    route() {
+      this.app.use(Session.initMiddleware())
+      this.app.use(this.router.routes())
+      this.app.use(this.router.allowedMethods())
+    }
     async listen(port) {
-        this.app.use(Session.initMiddleware())
-        this.app.use(this.router.routes())
-        this.app.use(this.router.allowedMethods())
         console.log(`Server run at http://127.0.0.1:${port}`)
         await this.app.listen({ port })
     }
